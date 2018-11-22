@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加
+
+version = "1.0.0"
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    //    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+
+}
+//添加
+publish {
+    userOrg = 'crfmoon'//bintray.com用户名
+    groupId = 'com.crfmoon'//jcenter上的路径
+    artifactId = 'pickerview'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'pickerview'//描述，不重要
+    website = 'https://github.com/yudongyy/pickerview'
+}
