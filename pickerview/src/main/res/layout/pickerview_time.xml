@@ -47,6 +47,7 @@
             android:id="@+id/min"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/pickerview_topbar_paddingleft"
             android:layout_weight="1.1"/>
     </LinearLayout>
 

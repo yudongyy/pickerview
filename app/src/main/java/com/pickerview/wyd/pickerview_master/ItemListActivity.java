@@ -1,21 +1,23 @@
 package com.pickerview.wyd.pickerview_master;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.pickerview.wyd.pickerview_master.dummy.DummyContent;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +35,7 @@ public class ItemListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    private TimePickerView mTimePickerView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,24 @@ public class ItemListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
     }
+    private void initStartTimeData() {
+        mTimePickerView = new TimePickerView(this, TimePickerView.Type.HOURS_MINS);
+        Calendar calendar = Calendar.getInstance();
+        mTimePickerView.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
+        mTimePickerView.setTime(new Date());
+        mTimePickerView.setCyclic(false);
+        mTimePickerView.setCancelable(true);
+        mTimePickerView.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                if (null == date)
+                    return;
+            }
+        });
+    }
 
-    public static class SimpleItemRecyclerViewAdapter
+
+    public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final ItemListActivity mParentActivity;
@@ -89,10 +108,12 @@ public class ItemListActivity extends AppCompatActivity {
                             .commit();
                 } else {
                     Context context = view.getContext();
-                    Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
-
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context, ItemDetailActivity.class);
+//                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+//
+//                    context.startActivity(intent);
+                    initStartTimeData();
+                    mTimePickerView.show();
                 }
             }
         };
